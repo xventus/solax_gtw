@@ -8,6 +8,13 @@ The hardware is based on a board equipped with ESP32-WROOM-32 and LAN8720 Ethern
 [Link to LilyGO](https://lilygo.cc/products/t-internet-poe?srsltid=AfmBOopORkTOhoKXokBKXhJh9QFOdM9ZnAsVb1GPqPzhONeA0cJKiBjo)
 
 
+<table>
+    <tr>
+        <td><img src="img/lily.png" alt="case" width="300"></td>
+     </tr>
+</table>
+
+Used pins:
 ---
 | ESP32 GPIO   |  Note                                 |
 |--------------|---------------------------------------|
@@ -24,7 +31,15 @@ The hardware is based on a board equipped with ESP32-WROOM-32 and LAN8720 Ethern
  The gateway is configured using the local AP "SOLAX-GATEWAY". The AP is activated by connecting the AP - SETUP jumper. 
  After connecting to the AP and entering http://192.168.4.1 in the browser, the configuration page is displayed. At the bottom of the page, a single line of log information is displayed.  
 
+ Fixed mqrtt topic:  solax/data
+
 After disconnecting the jumper, the AP is terminated. 
+
+<table>
+    <tr>
+        <td><img src="img/setup.png" alt="case" width="300"></td>
+     </tr>
+</table>
 
 ## LED STATE
 
@@ -38,3 +53,6 @@ After disconnecting the jumper, the AP is terminated.
 ## Solax
 
 ## TODO
+Node Red client</br>
+Change mqtt topic
+

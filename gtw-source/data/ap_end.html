@@ -1,0 +1,35 @@
+ </ul>
+  </div>
+
+  <footer>
+    <p>&copy; 2024 fotoventus.cz</p>
+  </footer>
+
+</body>
+
+
+<script>
+  async function updateLog() {
+    try {
+      const response = await fetch('/log'); 
+      const logMessage = await response.text();
+
+      const wifiListElement = document.getElementById('wifi-list');
+      wifiListElement.innerHTML = '';
+
+      const listItem = document.createElement('li');
+      listItem.textContent = logMessage; 
+      wifiListElement.appendChild(listItem);
+    } catch (error) {
+      console.error('Log error:', error);
+    }
+  }
+
+  setInterval(updateLog, 1000);
+
+  updateLog();
+</script>
+
+</html>
+
+

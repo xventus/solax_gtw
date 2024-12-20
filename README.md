@@ -52,7 +52,18 @@ After disconnecting the jumper, the AP is terminated.
 
 ## Solax
 
-## TODO
-Node Red client</br>
+TODO ....
+
+## NODE RED DASHBOARD
+
+To run the dashboard you need to have the "node-red-dashboard" palette version 3.6.5 installed. You need to configure the IP address of the MQTT browser. Replace xxx.xxx.xxx.xxxx with a functional IP address. And import FLOW.
+
+<table>
+    <tr>
+        <td><img src="img/nodered.png" alt="node red" width="300"></td>
+        <td><img src="img/ui.png" alt="dashboard" width="300"></td>
+     </tr>
+</table>
+
 
 

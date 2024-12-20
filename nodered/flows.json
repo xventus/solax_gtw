@@ -1,0 +1,1009 @@
+[
+    {
+        "id": "b75315fe.951f28",
+        "type": "tab",
+        "label": "Flow 7",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "22a9e669.696102",
+        "type": "mqtt in",
+        "z": "b75315fe.951f28",
+        "name": "",
+        "topic": "solax/data",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "faa63ee8.8fc23",
+        "x": 100,
+        "y": 320,
+        "wires": [
+            [
+                "fabd368b.e7c738"
+            ]
+        ]
+    },
+    {
+        "id": "fabd368b.e7c738",
+        "type": "function",
+        "z": "b75315fe.951f28",
+        "name": "processing",
+        "func": "var data = JSON.parse(msg.payload);\n\nmsg.payload = {\n    value: data.value,\n    unit: data.unit,\n    name: data.name\n};\n\n\n//msg.unit = msg.payload.unit;    // Uchovejte si jednotku do msg.unit\n//msg.payload = data.value; // msg.payload už jen číslo\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 270,
+        "y": 320,
+        "wires": [
+            [
+                "e1ff1b37.cdc908"
+            ]
+        ]
+    },
+    {
+        "id": "27727cee.873ccc",
+        "type": "ui_gauge",
+        "z": "b75315fe.951f28",
+        "name": "String 1 Voltage",
+        "group": "92d90161.09ea58",
+        "order": 2,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "Napětí 1",
+        "label": "{{msg.payload.unit}}",
+        "format": "{{msg.payload.value/10}}",
+        "min": 0,
+        "max": "700",
+        "colors": [
+            "#ca3838",
+            "#e6e600",
+            "#00b500"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 700,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "d973b3de.e0adf",
+        "type": "ui_gauge",
+        "z": "b75315fe.951f28",
+        "name": "String 2 Voltage",
+        "group": "92d90161.09ea58",
+        "order": 5,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "Napětí 2",
+        "label": "{{msg.payload.unit}}",
+        "format": "{{msg.payload.value/10}}",
+        "min": 0,
+        "max": "700",
+        "colors": [
+            "#ca3838",
+            "#e6e600",
+            "#00b500"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 700,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "e1ff1b37.cdc908",
+        "type": "switch",
+        "z": "b75315fe.951f28",
+        "name": "",
+        "property": "payload.name",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "PvVoltage1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "PvVoltage2",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "PvCurrent1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "PvCurrent2",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "Powerdc1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "Powerdc2",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "BatVoltage_Charge1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "BatCurrent_Charge1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "Batpower_Charge1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "TemperatureBat",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "BattCap",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "FeedinPower",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "GridPower_R",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "GridPower_S",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "GridPower_T",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "Etoday_togrid",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "Temperature",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "RunMode",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "BDCStatus",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "GridStatus",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "MPPTCount",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 21,
+        "x": 430,
+        "y": 320,
+        "wires": [
+            [
+                "27727cee.873ccc"
+            ],
+            [
+                "d973b3de.e0adf"
+            ],
+            [
+                "367c1776.a040b8"
+            ],
+            [
+                "2f7c2a48.3d1b1e"
+            ],
+            [
+                "d8e99ced.de3dc8",
+                "49d3eff7.1cfd98"
+            ],
+            [
+                "e0903994.e12b8",
+                "49d3eff7.1cfd98"
+            ],
+            [
+                "1b384be.3868934"
+            ],
+            [
+                "6e199b01.5e943c"
+            ],
+            [
+                "66b15790.191fc8"
+            ],
+            [
+                "35085723.846d9"
+            ],
+            [
+                "78e16e55.afe0c"
+            ],
+            [
+                "f6553be8.a71d68",
+                "2d4a4b15.d5539c"
+            ],
+            [
+                "e2cab5cb.76f51",
+                "d5033363.a26038"
+            ],
+            [
+                "f836987d.43208",
+                "d5033363.a26038"
+            ],
+            [
+                "e9ddb9b7.dbd998",
+                "d5033363.a26038"
+            ],
+            [
+                "3d1c9a83.722766"
+            ],
+            [
+                "4bb2fbcc.506d7c"
+            ],
+            [],
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "2f7c2a48.3d1b1e",
+        "type": "ui_gauge",
+        "z": "b75315fe.951f28",
+        "name": "String 2 Current",
+        "group": "92d90161.09ea58",
+        "order": 6,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "Proud 2",
+        "label": "{{msg.payload.unit}}",
+        "format": "{{msg.payload.value/10}}",
+        "min": 0,
+        "max": "25",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 700,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "d8e99ced.de3dc8",
+        "type": "ui_gauge",
+        "z": "b75315fe.951f28",
+        "name": "String 1 Power",
+        "group": "92d90161.09ea58",
+        "order": 4,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "Výkon 1",
+        "label": "{{msg.payload.unit}}",
+        "format": "{{msg.payload.value}}",
+        "min": "0",
+        "max": "3600",
+        "colors": [
+            "#80ff80",
+            "#00ff00",
+            "#00b500"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 700,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "e0903994.e12b8",
+        "type": "ui_gauge",
+        "z": "b75315fe.951f28",
+        "name": "String 2 Power",
+        "group": "92d90161.09ea58",
+        "order": 7,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "Výkon 2",
+        "label": "{{msg.payload.unit}}",
+        "format": "{{msg.payload.value}}",
+        "min": "0",
+        "max": "3600",
+        "colors": [
+            "#80ff80",
+            "#80ff00",
+            "#00b500"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 700,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "9caa9880.7dc698",
+        "type": "ui_gauge",
+        "z": "b75315fe.951f28",
+        "name": "String 1 + 2 Power",
+        "group": "92d90161.09ea58",
+        "order": 1,
+        "width": "6",
+        "height": 3,
+        "gtype": "gage",
+        "title": "Dodávaný výkon",
+        "label": "W",
+        "format": "{{msg.payload.string}}",
+        "min": "0",
+        "max": "10000",
+        "colors": [
+            "#80ff80",
+            "#00ff00",
+            "#00b500"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 1850,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "367c1776.a040b8",
+        "type": "ui_gauge",
+        "z": "b75315fe.951f28",
+        "name": "String 1 Current",
+        "group": "92d90161.09ea58",
+        "order": 3,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "Proud 1",
+        "label": "{{msg.payload.unit}}",
+        "format": "{{msg.payload.value/10}}",
+        "min": 0,
+        "max": "25",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 700,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "32cde3f2.adbce4",
+        "type": "function",
+        "z": "b75315fe.951f28",
+        "name": "read powerdc1, powerdc2",
+        "func": "let string1 = flow.get(\"Powerdc1\") || 0; \nlet string2 = flow.get(\"Powerdc2\") || 0;\nmsg.payload.string = string1 + string2;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1580,
+        "y": 600,
+        "wires": [
+            [
+                "9caa9880.7dc698",
+                "a8b1147d.308ac8"
+            ]
+        ]
+    },
+    {
+        "id": "6e199b01.5e943c",
+        "type": "ui_gauge",
+        "z": "b75315fe.951f28",
+        "name": "Batt Current",
+        "group": "ed7b7e39.e5409",
+        "order": 3,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "Proud",
+        "label": "{{msg.payload.unit}}",
+        "format": "{{msg.payload.value/10}}",
+        "min": "-25",
+        "max": "25",
+        "colors": [
+            "#ff0000",
+            "#5c5c5c",
+            "#00ff00"
+        ],
+        "seg1": "-1",
+        "seg2": "+1",
+        "className": "",
+        "x": 690,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "66b15790.191fc8",
+        "type": "ui_gauge",
+        "z": "b75315fe.951f28",
+        "name": "Battery Power",
+        "group": "ed7b7e39.e5409",
+        "order": 2,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "Výkon",
+        "label": "{{msg.payload.unit}}",
+        "format": "{{msg.payload.value}}",
+        "min": "-4000",
+        "max": "4000",
+        "colors": [
+            "#ca3838",
+            "#5c5c5c",
+            "#00b500"
+        ],
+        "seg1": "-5",
+        "seg2": "+5",
+        "className": "",
+        "x": 700,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "78e16e55.afe0c",
+        "type": "ui_gauge",
+        "z": "b75315fe.951f28",
+        "name": "Batt Capacity",
+        "group": "ed7b7e39.e5409",
+        "order": 1,
+        "width": "6",
+        "height": "3",
+        "gtype": "gage",
+        "title": "Nabití baterie",
+        "label": "{{msg.payload.unit}}",
+        "format": "{{msg.payload.value}}",
+        "min": "0",
+        "max": "100",
+        "colors": [
+            "#ca3838",
+            "#e8eb06",
+            "#0abd0a"
+        ],
+        "seg1": "25",
+        "seg2": "60",
+        "className": "",
+        "x": 700,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "35085723.846d9",
+        "type": "ui_gauge",
+        "z": "b75315fe.951f28",
+        "name": "Battery temperature",
+        "group": "ed7b7e39.e5409",
+        "order": 5,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "Teplota",
+        "label": "{{msg.payload.unit}}",
+        "format": "{{msg.payload.value}}",
+        "min": 0,
+        "max": "90",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 720,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "1b384be.3868934",
+        "type": "ui_gauge",
+        "z": "b75315fe.951f28",
+        "name": "Battery Voltage",
+        "group": "ed7b7e39.e5409",
+        "order": 4,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "Napětí",
+        "label": "{{msg.payload.unit}}",
+        "format": "{{msg.payload.value/10}}",
+        "min": "-10000",
+        "max": "10000",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 700,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "8a587e96.93a29",
+        "type": "ui_gauge",
+        "z": "b75315fe.951f28",
+        "name": "Inverter power In/Out",
+        "group": "39e90ba0.85d694",
+        "order": 1,
+        "width": "6",
+        "height": "3",
+        "gtype": "gage",
+        "title": "Výkon",
+        "label": "W",
+        "format": "{{msg.payload.total}}",
+        "min": "-10000",
+        "max": "10000",
+        "colors": [
+            "#ff2600",
+            "#f4fbf4",
+            "#00f900"
+        ],
+        "seg1": "100",
+        "seg2": "-100",
+        "className": "",
+        "x": 1320,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "f6553be8.a71d68",
+        "type": "ui_gauge",
+        "z": "b75315fe.951f28",
+        "name": "Power to grid  in/out ",
+        "group": "6af7bb79.8e04fc",
+        "order": 11,
+        "width": 3,
+        "height": 3,
+        "gtype": "gage",
+        "title": "Distribuční síť",
+        "label": "W",
+        "format": "{{msg.payload.value}}",
+        "min": "-10000",
+        "max": "10000",
+        "colors": [
+            "#ff2600",
+            "#5f5959",
+            "#00f900"
+        ],
+        "seg1": "0",
+        "seg2": "0",
+        "className": "",
+        "x": 720,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "e2cab5cb.76f51",
+        "type": "ui_gauge",
+        "z": "b75315fe.951f28",
+        "name": "inverter R - power",
+        "group": "39e90ba0.85d694",
+        "order": 2,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "fáze L1",
+        "label": "W",
+        "format": "{{msg.payload.value}}",
+        "min": "0",
+        "max": "5000",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 710,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "f836987d.43208",
+        "type": "ui_gauge",
+        "z": "b75315fe.951f28",
+        "name": "inverter S - power",
+        "group": "39e90ba0.85d694",
+        "order": 3,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "fáze L2",
+        "label": "W",
+        "format": "{{msg.payload.value}}",
+        "min": "0",
+        "max": "5000",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 710,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "e9ddb9b7.dbd998",
+        "type": "ui_gauge",
+        "z": "b75315fe.951f28",
+        "name": "inverter T - power",
+        "group": "39e90ba0.85d694",
+        "order": 4,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "fáze L3",
+        "label": "W",
+        "format": "{{msg.payload.value}}",
+        "min": "0",
+        "max": "5000",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 710,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "2ac2ac36.f2005c",
+        "type": "ui_gauge",
+        "z": "b75315fe.951f28",
+        "name": "Home Consumpsion",
+        "group": "6af7bb79.8e04fc",
+        "order": 10,
+        "width": 3,
+        "height": 3,
+        "gtype": "gage",
+        "title": "Spotřeba domu",
+        "label": "W",
+        "format": "{{msg.payload.value}}",
+        "min": 0,
+        "max": "10000",
+        "colors": [
+            "#f5ec00",
+            "#ff9300",
+            "#ff2600"
+        ],
+        "seg1": "1000",
+        "seg2": "5000",
+        "className": "",
+        "x": 1560,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "4bb2fbcc.506d7c",
+        "type": "ui_gauge",
+        "z": "b75315fe.951f28",
+        "name": "Inverter temperature",
+        "group": "39e90ba0.85d694",
+        "order": 5,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "Teplota",
+        "label": "C",
+        "format": "{{msg.payload.value}}",
+        "min": 0,
+        "max": "90",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 720,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "e9a65328.810d2",
+        "type": "ui_gauge",
+        "z": "b75315fe.951f28",
+        "name": "Free power",
+        "group": "6af7bb79.8e04fc",
+        "order": 1,
+        "width": "6",
+        "height": "4",
+        "gtype": "gage",
+        "title": "Nadbytek ",
+        "label": "W",
+        "format": "{{msg.payload.value}}",
+        "min": "-10000",
+        "max": "10000",
+        "colors": [
+            "#ff2600",
+            "#e6e600",
+            "#00f900"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 1990,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "3d1c9a83.722766",
+        "type": "ui_gauge",
+        "z": "b75315fe.951f28",
+        "name": "",
+        "group": "ec9d5461.79a258",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Vytěženo",
+        "label": "kWh",
+        "format": "{{msg.payload.value/10}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#ff2600",
+            "#e6e600",
+            "#00b500"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 680,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "22544bf5.209364",
+        "type": "function",
+        "z": "b75315fe.951f28",
+        "name": "read flow context Power R,S,T",
+        "func": "let r = flow.get(\"GridPower_R\") || 0; \nlet s = flow.get(\"GridPower_S\") || 0;\nlet t = flow.get(\"GridPower_T\") || 0;\n\nlet total = r + s + t;\n\n\nmsg.payload = {\n    total: total,\n    details: {\n        GridPower_R: r,\n        GridPower_S: s,\n        GridPower_T: t\n    }\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1010,
+        "y": 600,
+        "wires": [
+            [
+                "8a587e96.93a29",
+                "a533c0c5.b48878"
+            ]
+        ]
+    },
+    {
+        "id": "a533c0c5.b48878",
+        "type": "function",
+        "z": "b75315fe.951f28",
+        "name": "House Consumpsion Calc",
+        "func": "\n\nlet feedin = flow.get(\"FeedinPower\") || 0; \nlet grid = msg.payload.total;\n\nlet sum = grid - feedin;\n\nmsg.payload.value = sum;\nflow.set(\"consumpsion\", sum);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1310,
+        "y": 600,
+        "wires": [
+            [
+                "2ac2ac36.f2005c",
+                "32cde3f2.adbce4"
+            ]
+        ]
+    },
+    {
+        "id": "a8b1147d.308ac8",
+        "type": "function",
+        "z": "b75315fe.951f28",
+        "name": "Free energy calc",
+        "func": "// stringsPowerValue - homeConsumptionValue\n\nlet strings = msg.payload.string;\nlet consumpsion = flow.get(\"consumpsion\") || 0; ;\nmsg.payload.value = strings - consumpsion;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1800,
+        "y": 680,
+        "wires": [
+            [
+                "e9a65328.810d2",
+                "115426e.b853ed9"
+            ]
+        ]
+    },
+    {
+        "id": "115426e.b853ed9",
+        "type": "function",
+        "z": "b75315fe.951f28",
+        "name": "set power dice",
+        "func": "global.set(\"solar-power\",msg.payload.value);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2000,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d5033363.a26038",
+        "type": "function",
+        "z": "b75315fe.951f28",
+        "name": "flow context Power R,S,T",
+        "func": "let name = msg.payload.name;\nlet value = msg.payload.value;\nflow.set(name, value);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 730,
+        "y": 600,
+        "wires": [
+            [
+                "22544bf5.209364"
+            ]
+        ]
+    },
+    {
+        "id": "2d4a4b15.d5539c",
+        "type": "function",
+        "z": "b75315fe.951f28",
+        "name": "flow context feed in power",
+        "func": "let name = msg.payload.name;\nlet value = msg.payload.value;\nflow.set(name, value);\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 740,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "49d3eff7.1cfd98",
+        "type": "function",
+        "z": "b75315fe.951f28",
+        "name": "flow context feed in power dc string",
+        "func": "let name = msg.payload.name;\nlet value = msg.payload.value;\nflow.set(name, value);\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 770,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "faa63ee8.8fc23",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "mqttsrv",
+        "broker": "xxx.xxx.xxx.xxx",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "15",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "92d90161.09ea58",
+        "type": "ui_group",
+        "z": "",
+        "name": "Panely",
+        "tab": "e5a7b22d.02bc2",
+        "order": 5,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "ed7b7e39.e5409",
+        "type": "ui_group",
+        "z": "",
+        "name": "Baterie",
+        "tab": "e5a7b22d.02bc2",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "39e90ba0.85d694",
+        "type": "ui_group",
+        "z": "",
+        "name": "Měnič",
+        "tab": "e5a7b22d.02bc2",
+        "order": 4,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "6af7bb79.8e04fc",
+        "type": "ui_group",
+        "z": "",
+        "name": "Dům",
+        "tab": "e5a7b22d.02bc2",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "ec9d5461.79a258",
+        "type": "ui_group",
+        "z": "",
+        "name": "Stav",
+        "tab": "e5a7b22d.02bc2",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "e5a7b22d.02bc2",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Power Plant 2",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]

@@ -54,5 +54,5 @@ After disconnecting the jumper, the AP is terminated.
 
 ## TODO
 Node Red client</br>
-Change mqtt topic
+
 

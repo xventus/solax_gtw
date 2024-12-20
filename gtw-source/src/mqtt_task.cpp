@@ -87,6 +87,9 @@ void MqttTask::doneMqttClient()
 void MqttTask::loop()
 {
     QueueModbusPacket packet; 
+    KeyVal &kv = KeyVal::getInstance();
+    auto topic = kv.readString(literals::kv_topic,"solax/data");
+
     while (true) { // Loop forever
 
         // Check connection status
@@ -108,9 +111,8 @@ void MqttTask::loop()
         if (res == pdTRUE) {
             // Process received packet
             if (_connectionManager && _connectionManager->isMqttActive()) {
-                std::string topic = "solax/data"; 
                 auto msg = JsonSerializer::serializeModbusPacket(packet);
-                if (!_mqttClient->publish(topic, msg.c_str())) {
+                if (!_mqttClient->publish(topic, msg)) {
                     ESP_LOGE(LOG_TAG, "Failed to publish message");
                 } else {
                     ESP_LOGI(LOG_TAG, "Message published: %s", msg.c_str());

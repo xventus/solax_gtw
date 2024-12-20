@@ -39,12 +39,12 @@ public:
     static constexpr const char *kv_user{"user"};       ///  mqtt user 
     static constexpr const char *kv_passwd{"passwd"};   ///  mqtt password
     static constexpr const char *kv_refresh{"refresh"}; ///  modbus -> mqtt refresh
+    static constexpr const char *kv_topic{"topic"};     ///  modbus -> mqtt refresh
   
 
     // spiffs filenames
     static constexpr const char *kv_fl_index{"/spiffs/index.html"}; 
-    static constexpr const char *kv_fl_apb{"/spiffs/ap_beg.html"};
-    static constexpr const char *kv_fl_ape{"/spiffs/ap_end.html"}; 
+    static constexpr const char *kv_fl_ap{"/spiffs/ap.html"};
     static constexpr const char *kv_fl_style{"/spiffs/style.css"}; 
     static constexpr const char *kv_fl_finish{"/spiffs/finish.html"};
     

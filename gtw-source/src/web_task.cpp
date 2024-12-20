@@ -11,6 +11,11 @@
 #include <math.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <cJSON.h>
+#include <iostream>
+#include <iomanip>
+#include <sstream>
+#include <string>
 
 #include "application.h"
 #include "web_task.h"
@@ -18,12 +23,8 @@
 #include "key_val.h"
 #include "content_file.h"
 #include "http_request.h"
-#include <cJSON.h>
+#include "utils.h"
 
-#include <iostream>
-#include <iomanip>
-#include <sstream>
-#include <string>
 
 WebTask::WebTask()
 {
@@ -86,12 +87,11 @@ void WebTask::loop()
 					};
 					
 					KeyVal& kv = KeyVal::getInstance();
-					ConentFile ap1cntb(literals::kv_fl_apb);
-					ConentFile ap1cnte(literals::kv_fl_ape);
-    				auto contnetb = ap1cntb.readContnet();
+					ConentFile apcnt(literals::kv_fl_ap);
+    				auto contnetb = apcnt.readContnet();
 					
 					if (contnetb.empty()) {
-						httpd_resp_send_custom_err(req, literals::kv_fl_apb, "initialize SPIF first!");
+						httpd_resp_send_custom_err(req, literals::kv_fl_ap, "initialize SPIF first!");
 					}
 
 					replaceAll(contnetb, "%IP_ADDRESS%", kv.readString(literals::kv_ip,"192.168.2.254"));
@@ -100,8 +100,8 @@ void WebTask::loop()
 					replaceAll(contnetb, "%BROKER_USER%", kv.readString(literals::kv_user,""));
 					replaceAll(contnetb, "%BROKER_PASSWD%", kv.readString(literals::kv_passwd,""));
 					replaceAll(contnetb, "%REFRESH_RATE%", kv.readString(literals::kv_refresh,"100"));
+					replaceAll(contnetb, "%TOPIC%", kv.readString(literals::kv_topic,"solax/data"));
 
-					contnetb += ap1cnte.readContnet();
  					httpd_resp_send(req, contnetb.c_str(), contnetb.length());
                     return ESP_OK; });
 
@@ -136,7 +136,10 @@ void WebTask::loop()
 					kv.writeString(literals::kv_user, HttpReqest::getValue(formData, literals::kv_user).c_str());
 					kv.writeString(literals::kv_passwd, HttpReqest::getValue(formData, literals::kv_passwd).c_str());
 					kv.writeString(literals::kv_refresh, HttpReqest::getValue(formData, literals::kv_refresh).c_str());
+					kv.writeString(literals::kv_topic, Utils::urlDecode(HttpReqest::getValue(formData, literals::kv_topic)).c_str());
 					
+					ESP_LOGI(LOG_TAG, "****** topic >%s< >%s<", HttpReqest::getValue(formData, literals::kv_topic).c_str() ,Utils::urlDecode(HttpReqest::getValue(formData, literals::kv_topic)).c_str());
+
 					// Response & swith mode 
 					ConentFile respContnetDialog(literals::kv_fl_finish);
     				auto finish = respContnetDialog.readContnet();

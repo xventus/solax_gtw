@@ -50,8 +50,14 @@ public:
        
     }
 
-    bool init(const std::string &uri, const std::string &username = "", const std::string &password = "")
+    bool init(std::string_view uri, std::string_view username = "",  std::string_view password = "")
     {
+        if (uri.empty())
+        {
+           ESP_LOGE(LOG_TAG, "Empty URI");
+           return false;  
+        }
+
         if (!_connectionMutex)
         {
             ESP_LOGE(LOG_TAG, "Mutex is not initialized, cannot proceed");
@@ -69,9 +75,9 @@ public:
 
            
             esp_mqtt_client_config_t mqtt_cfg = {};
-            mqtt_cfg.broker.address.uri = uri.c_str();
-            mqtt_cfg.credentials.username = username.empty() ? nullptr : username.c_str();
-            mqtt_cfg.credentials.authentication.password = password.empty() ? nullptr : password.c_str();
+            mqtt_cfg.broker.address.uri = uri.data();
+            mqtt_cfg.credentials.username = username.empty() ? nullptr : username.data();
+            mqtt_cfg.credentials.authentication.password = password.empty() ? nullptr : password.data();
 
             _client = esp_mqtt_client_init(&mqtt_cfg);
             if (!_client)
@@ -115,22 +121,28 @@ public:
         return connected;
     }
 
-    bool publish(const std::string &topic, const std::string &data, int qos = 1, int retain = 0)
+    bool publish(std::string_view topic, std::string_view data, int qos = 1, int retain = 0)
     {
+        if (topic.empty() || data.empty())
+        {
+            ESP_LOGW(LOG_TAG, "topic / data is empty");
+            return false;
+        }
+
         if (!isConnected())
         {
             ESP_LOGW(LOG_TAG, "Cannot publish, MQTT is not connected");
             return false;
         }
 
-        int msg_id = esp_mqtt_client_publish(_client, topic.c_str(), data.c_str(), 0, qos, retain);
+        int msg_id = esp_mqtt_client_publish(_client, topic.data(), data.data(), 0, qos, retain);
         if (msg_id == -1)
         {
             ESP_LOGE(LOG_TAG, "Failed to publish message");
             return false;
         }
 
-        ESP_LOGI(LOG_TAG, "Published message with ID %d on topic %s", msg_id, topic.c_str());
+        ESP_LOGI(LOG_TAG, "Published message with ID %d on topic %s", msg_id, topic.data());
         return true;
     }
 

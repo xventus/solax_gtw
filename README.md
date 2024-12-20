@@ -37,7 +37,7 @@ After disconnecting the jumper, the AP is terminated.
 
 <table>
     <tr>
-        <td><img src="img/setup.png" alt="case" width="300"></td>
+        <td><img src="img/setup.png" alt="setup" width="300"></td>
      </tr>
 </table>
 
